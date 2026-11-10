@@ -1,6 +1,6 @@
 # AgentForge: AI-Native SDLC Skill Library
 
-## Overview (TL;DR)
+## Overview
 This repository collects AI agent skills created by engineers across our organization.
 These skills improve productivity in daily software development work.
 Share skills that give proven results.
