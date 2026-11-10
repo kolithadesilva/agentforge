@@ -19,27 +19,6 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Scan for hardcoded credentials (Gitleaks)
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: true
-
-      - name: Verify submission structure
+      - name: Run AgentForge validation suite
         run: |
-          python3 -c "
-          from pathlib import Path
-          submissions = Path('submissions')
-          if not submissions.exists():
-              exit(0)
-          errors = []
-          for item in submissions.iterdir():
-              if item.is_dir() and not item.name.startswith('.'):
-                  skill_file = item / 'SKILL.md'
-                  if not skill_file.exists():
-                      errors.append(f'Missing SKILL.md in submissions/{item.name}')
-          if errors:
-              print('\n'.join(errors))
-              exit(1)
-          print('All submission folders contain a valid SKILL.md file.')
-          "
+          python3 scripts/validate.py
