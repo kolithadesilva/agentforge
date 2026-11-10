@@ -7,6 +7,11 @@ on:
       - "submissions/**"
       - "skills/**"
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -20,5 +25,45 @@ jobs:
           python-version: "3.11"
 
       - name: Run AgentForge validation suite
+        id: run_validation
         run: |
-          python3 scripts/validate.py
+          set +e
+          OUTPUT=$(python3 scripts/validate.py 2>&1)
+          EXIT_CODE=$?
+          echo "$OUTPUT"
+
+          # Export multiline output for next steps
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "validation_output<<$EOF" >> $GITHUB_OUTPUT
+          echo "$OUTPUT" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
+          exit $EXIT_CODE
+
+      - name: On Failure - Label PR and Post Guidance
+        if: failure() && github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          VAL_OUTPUT: ${{ steps.run_validation.outputs.validation_output }}
+        run: |
+          gh pr edit "$PR_NUMBER" --add-label "status: invalid-submission" || true
+          COMMENT="### ❌ AgentForge Validation Failed
+
+This submission does not conform to repository standards:
+
+\`\`\`text
+${VAL_OUTPUT}
+\`\`\`
+
+---
+> ⚠️ **Notice**: Please push a commit with the required corrections. Pull requests with unresolved validation errors will be **automatically closed after 5 days** of inactivity."
+          gh pr comment "$PR_NUMBER" --body "$COMMENT" || true
+
+      - name: On Success - Remove Invalid Labels
+        if: success() && github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr edit "$PR_NUMBER" --remove-label "status: invalid-submission" || true
+          gh pr edit "$PR_NUMBER" --remove-label "status: stale-invalid" || true
