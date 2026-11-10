@@ -1,0 +1,31 @@
+name: "Report a Broken Skill"
+description: "Report an outdated or failing skill in the library."
+title: "[Bug]: <Skill Name> is failing"
+labels: ["broken-skill"]
+body:
+  - type: input
+    id: skill_name
+    attributes:
+      label: "Skill Name"
+      placeholder: "k8s-pod-diagnostics"
+    validations:
+      required: true
+  - type: dropdown
+    id: runtime
+    attributes:
+      label: "Agent Runtime"
+      options:
+        - "GitHub Copilot"
+        - "Antigravity"
+        - "Cursor"
+        - "Claude Code"
+        - "Other"
+    validations:
+      required: true
+  - type: textarea
+    id: failure_description
+    attributes:
+      label: "What Failed?"
+      description: "Describe the failure, error message, or obsolete instructions."
+    validations:
+      required: true

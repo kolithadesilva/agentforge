@@ -1,0 +1,31 @@
+[
+  {
+    "name": "pull-request-security-check",
+    "description": "Inspect git diffs for security vulnerabilities, hardcoded secrets, and missing authentication guards. Use this skill when reviewing pull requests or preparing code for review.",
+    "sdlc_phase": "review-and-security",
+    "observed_benefit": "Finds missing authorization checks and exposed test keys before human code review. Saves ~20 minutes per PR.",
+    "author": "@appsec-team",
+    "tested_with": [
+      "github-copilot",
+      "antigravity",
+      "cursor",
+      "claude-code"
+    ],
+    "tags": [],
+    "path": "skills/review-and-security/pull-request-security-check"
+  },
+  {
+    "name": "edge-case-unit-test-generator",
+    "description": "Generate boundary and failure condition tests for existing functions. Use this skill when adding unit tests, increasing test coverage, or testing edge cases.",
+    "sdlc_phase": "testing-and-qa",
+    "observed_benefit": "Generates boundary condition tests (nulls, empty strings, timeouts). Increases test coverage by ~25%.",
+    "author": "@qa-guild",
+    "tested_with": [
+      "github-copilot",
+      "antigravity",
+      "cursor"
+    ],
+    "tags": [],
+    "path": "skills/testing-and-qa/edge-case-unit-test-generator"
+  }
+]

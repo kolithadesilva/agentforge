@@ -1,0 +1,57 @@
+name: "Submit an Existing Skill"
+description: "Share a proven AI agent skill used in your SDLC workflow."
+title: "[Skill Submission]: <Skill Name>"
+labels: ["skill-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to share an AI agent skill that helps your team.
+        A moderator will review your submission and help add it to the library.
+  - type: input
+    id: skill_name
+    attributes:
+      label: "Skill Name"
+      description: "Use lowercase letters and hyphens (for example: `unit-test-generator`)."
+      placeholder: "api-contract-validator"
+    validations:
+      required: true
+  - type: dropdown
+    id: sdlc_phase
+    attributes:
+      label: "SDLC Category"
+      description: "Select the development phase where this skill helps most."
+      options:
+        - "plan-and-spec"
+        - "architecture"
+        - "coding-and-refactor"
+        - "testing-and-qa"
+        - "review-and-security"
+        - "deploy-and-ops"
+    validations:
+      required: true
+  - type: textarea
+    id: observed_benefit
+    attributes:
+      label: "Observed Benefit"
+      description: "Describe the time saved or quality improvement your team observed."
+      placeholder: "Reduces PR review preparation time by 30 minutes per ticket."
+    validations:
+      required: true
+  - type: checkboxes
+    id: tested_agents
+    attributes:
+      label: "Tested Agent Runtimes"
+      options:
+        - label: "GitHub Copilot"
+        - label: "Antigravity"
+        - label: "Cursor"
+        - label: "Claude Code"
+  - type: textarea
+    id: skill_content
+    attributes:
+      label: "Skill Instructions (`SKILL.md` content)"
+      description: "Paste your prompt or instructions. Remove all passwords and API tokens."
+      render: markdown
+    validations:
+      required: true

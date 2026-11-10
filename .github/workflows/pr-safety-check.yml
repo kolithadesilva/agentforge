@@ -1,0 +1,45 @@
+name: PR Safety and Validation Check
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "submissions/**"
+      - "skills/**"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Scan for hardcoded credentials (Gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Verify submission structure
+        run: |
+          python3 -c "
+          from pathlib import Path
+          submissions = Path('submissions')
+          if not submissions.exists():
+              exit(0)
+          errors = []
+          for item in submissions.iterdir():
+              if item.is_dir() and not item.name.startswith('.'):
+                  skill_file = item / 'SKILL.md'
+                  if not skill_file.exists():
+                      errors.append(f'Missing SKILL.md in submissions/{item.name}')
+          if errors:
+              print('\n'.join(errors))
+              exit(1)
+          print('All submission folders contain a valid SKILL.md file.')
+          "

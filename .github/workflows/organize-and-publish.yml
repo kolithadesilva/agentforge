@@ -1,0 +1,41 @@
+name: Organize and Publish Skills
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "submissions/**"
+      - "skills/**"
+
+permissions:
+  contents: write
+
+jobs:
+  organize-and-catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run curation and catalog builder
+        run: |
+          python3 scripts/curate.py
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add skills/ submissions/ CATALOG.md catalog/
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Auto-curate skills and update catalog [skip ci]"
+            git push origin main
+          fi
