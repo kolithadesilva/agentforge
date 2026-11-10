@@ -22,7 +22,7 @@ if [ -z "$SKILL_NAME" ]; then
 fi
 
 case "$AGENT_TARGET" in
-  copilot)
+  copilot|github-copilot)
     DEST_DIR=".github/skills/${SKILL_NAME}"
     ;;
   antigravity)

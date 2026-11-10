@@ -8,7 +8,7 @@ param(
     [string]$SkillName,
 
     [Parameter(Position = 1, Mandatory = $false)]
-    [ValidateSet("copilot", "antigravity", "cursor", "claude")]
+    [ValidateSet("copilot", "github-copilot", "antigravity", "cursor", "claude")]
     [string]$Agent = "copilot"
 )
 
@@ -18,18 +18,19 @@ $Branch   = "main"
 $RawBase  = "https://raw.githubusercontent.com/$RepoOrg/$RepoName/$Branch"
 
 if ([string]::IsNullOrWhiteSpace($SkillName)) {
-    Write-Host "Usage: .\install.ps1 -SkillName <skill-name> [-Agent copilot|antigravity|cursor|claude]" -ForegroundColor Yellow
+    Write-Host "Usage: .\install.ps1 -SkillName <skill-name> [-Agent github-copilot|antigravity|cursor|claude]" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "One-liner:" -ForegroundColor Yellow
-    Write-Host "  & ([scriptblock]::Create((irm $RawBase/install.ps1))) <skill-name> [copilot]"
+    Write-Host "  & ([scriptblock]::Create((irm $RawBase/install.ps1))) <skill-name> [github-copilot]"
     exit 1
 }
 
 $AgentPaths = @{
-    "copilot"     = ".github/skills/$SkillName"
-    "antigravity" = ".agents/skills/$SkillName"
-    "cursor"      = ".cursor/skills/$SkillName"
-    "claude"      = ".claude/skills/$SkillName"
+    "copilot"        = ".github/skills/$SkillName"
+    "github-copilot" = ".github/skills/$SkillName"
+    "antigravity"    = ".agents/skills/$SkillName"
+    "cursor"         = ".cursor/skills/$SkillName"
+    "claude"         = ".claude/skills/$SkillName"
 }
 
 $DestDir = $AgentPaths[$Agent]

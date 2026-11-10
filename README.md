@@ -101,7 +101,7 @@ npx skills add kolithadesilva/agentforge
 #### 2. Install a Specific Skill for GitHub Copilot
 Install directly into `.github/skills/`:
 ```bash
-npx skills add kolithadesilva/agentforge --skill pull-request-security-check -a copilot
+npx skills add kolithadesilva/agentforge --skill pull-request-security-check -a github-copilot
 ```
 
 #### 3. Install for Other Coding Agents

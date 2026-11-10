@@ -13,7 +13,7 @@ Inside your project repository, run either `npx skills` or the zero-dependency `
 npx skills add kolithadesilva/agentforge
 
 # Direct install for GitHub Copilot (.github/skills/<skill-name>/):
-npx skills add kolithadesilva/agentforge --skill <skill-name> -a copilot
+npx skills add kolithadesilva/agentforge --skill <skill-name> -a github-copilot
 ```
 
 #### Option 2: Zero-Dependency Scripts (No Node Required)

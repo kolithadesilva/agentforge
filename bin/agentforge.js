@@ -16,6 +16,7 @@ const RAW_BASE = `https://raw.githubusercontent.com/${REPO_ORG}/${REPO_NAME}/${B
 
 const AGENT_PATHS = {
   copilot: (name) => `.github/skills/${name}`,
+  'github-copilot': (name) => `.github/skills/${name}`,
   antigravity: (name) => `.agents/skills/${name}`,
   cursor: (name) => `.cursor/skills/${name}`,
   claude: (name) => `.claude/skills/${name}`,
