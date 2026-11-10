@@ -85,6 +85,6 @@ if (Test-Path $LocalSkillFile) {
 }
 
 Write-Host ""
-Write-Host "✔ Installation complete!" -ForegroundColor Green
+Write-Host "[SUCCESS] Installation complete!" -ForegroundColor Green
 Write-Host "Installed to: $DestFile"
 Write-Host "Target Agent: $Agent"

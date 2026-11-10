@@ -64,11 +64,21 @@ Submit a skill that you already use and trust.
 
 ## Review and Approval Process
 
-1. A repository moderator examines your PR.
-2. The moderator verifies that no passwords, API keys, or private tokens exist in the files.
-3. The moderator approves and merges the PR.
-4. GitHub Actions automatically moves your skill into `skills/<sdlc_phase>/<skill-name>/`.
-5. GitHub Actions updates the [CATALOG.md](CATALOG.md) file.
+1. When you open a PR, automated validation verifies your skill structure, metadata, and security.
+2. A repository moderator examines your PR.
+3. The moderator verifies that no passwords, API keys, or private tokens exist in the files.
+4. The moderator approves and merges the PR.
+5. GitHub Actions automatically moves your skill into `skills/<sdlc_phase>/<skill-name>/`.
+6. GitHub Actions updates the [CATALOG.md](CATALOG.md) file.
+
+### Automated Cleanup for Invalid Pull Requests
+
+To prevent stale pull requests from accumulating:
+
+1. **Immediate Feedback**: If a submission fails validation, GitHub Actions attaches the label `status: invalid-submission` and posts a comment with the exact failure details.
+2. **Day 3 Reminder**: If no updates are pushed after 3 days, GitHub Actions adds the label `status: stale-invalid` and warns the author that 2 days remain.
+3. **Day 5 Auto-Close**: If the pull request remains uncorrected after 5 days total, GitHub Actions closes the pull request automatically.
+4. **Auto-Recovery**: If the author pushes the required corrections at any time before day 5, GitHub Actions automatically removes the invalid labels and passes the check.
 
 ---
 

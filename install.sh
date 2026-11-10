@@ -90,6 +90,6 @@ else
   curl -fsSL "$SKILL_FILE_URL" -o "${DEST_DIR}/SKILL.md"
 fi
 
-echo "✔ Installation complete!"
+echo "[SUCCESS] Installation complete!"
 echo "Installed to: ${DEST_DIR}/SKILL.md"
 echo "Target Agent: ${AGENT_TARGET}"

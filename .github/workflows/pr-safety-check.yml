@@ -47,7 +47,7 @@ jobs:
           VAL_OUTPUT: ${{ steps.run_validation.outputs.validation_output }}
         run: |
           gh pr edit "$PR_NUMBER" --add-label "status: invalid-submission" || true
-          COMMENT="### ❌ AgentForge Validation Failed
+          COMMENT="### [VALIDATION FAILED] AgentForge Quality Check
 
 This submission does not conform to repository standards:
 
@@ -56,7 +56,7 @@ ${VAL_OUTPUT}
 \`\`\`
 
 ---
-> ⚠️ **Notice**: Please push a commit with the required corrections. Pull requests with unresolved validation errors will be **automatically closed after 5 days** of inactivity."
+> **Notice**: Please push a commit with the required corrections. Pull requests with unresolved validation errors will be **automatically closed after 5 days** of inactivity."
           gh pr comment "$PR_NUMBER" --body "$COMMENT" || true
 
       - name: On Success - Remove Invalid Labels

@@ -93,7 +93,7 @@ async function addSkill(skillName, targetAgent = 'copilot') {
     fs.writeFileSync(destFile, content, 'utf8');
   }
 
-  console.log(`\n✔ Installed skill: ${skillName}`);
+  console.log(`\n[SUCCESS] Installed skill: ${skillName}`);
   console.log(`Target Agent:   ${targetAgent}`);
   console.log(`Location:       ${destFile}\n`);
 }

@@ -200,13 +200,13 @@ def main():
             all_errors.extend(errors)
 
     if all_errors:
-        print("\n❌ VALIDATION FAILED! The submission violates repository guidelines:\n")
+        print("\n[VALIDATION FAILED] The submission violates repository guidelines:\n")
         for idx, err in enumerate(all_errors, 1):
             print(f"  {idx}. {err}")
         print("\nPlease fix these errors before requesting moderator review.\n")
         sys.exit(1)
 
-    print("✔ All submission checks passed successfully!")
+    print("[SUCCESS] All submission checks passed successfully!")
     sys.exit(0)
 
 
