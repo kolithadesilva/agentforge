@@ -1,5 +1,20 @@
 [
   {
+    "name": "k8s-crashloop-diagnostics",
+    "description": "Diagnose Kubernetes pods stuck in CrashLoopBackOff or Error states. Use this skill when pods fail to start, crash unexpectedly, or report OOMKilled events.",
+    "sdlc_phase": "deploy-and-ops",
+    "observed_benefit": "Isolates root cause of pod failures in under 2 minutes. Saves ~30 minutes of manual log searching.",
+    "author": "@devops-guild",
+    "tested_with": [
+      "github-copilot",
+      "antigravity",
+      "cursor",
+      "claude-code"
+    ],
+    "tags": [],
+    "path": "skills/deploy-and-ops/k8s-crashloop-diagnostics"
+  },
+  {
     "name": "pull-request-security-check",
     "description": "Inspect git diffs for security vulnerabilities, hardcoded secrets, and missing authentication guards. Use this skill when reviewing pull requests or preparing code for review.",
     "sdlc_phase": "review-and-security",

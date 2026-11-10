@@ -1,7 +1,7 @@
 # AI-Native SDLC Agent Skills Catalog
 
 ## Summary
-This catalog lists **2** agent skills verified by engineers across our organization.
+This catalog lists **3** agent skills verified by engineers across our organization.
 Each skill includes the observed benefit in real development workflows.
 
 ### How to Install a Skill
@@ -63,4 +63,6 @@ curl -fsSL https://raw.githubusercontent.com/kolithadesilva/agentforge/main/inst
 
 ### Deploy And Ops (`deploy-and-ops`)
 
-*No skills currently registered for this phase.*
+| Skill Name | Description | Observed Benefit | Tested Agents | Author |
+| :--- | :--- | :--- | :--- | :--- |
+| **[k8s-crashloop-diagnostics](skills/deploy-and-ops/k8s-crashloop-diagnostics/SKILL.md)** | Diagnose Kubernetes pods stuck in CrashLoopBackOff or Error states. Use this skill when pods fail to start, crash unexpectedly, or report OOMKilled events. | Isolates root cause of pod failures in under 2 minutes. Saves ~30 minutes of manual log searching. | github-copilot, antigravity, cursor, claude-code | @devops-guild |
