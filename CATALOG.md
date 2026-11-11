@@ -5,34 +5,18 @@ This catalog lists **3** agent skills verified by engineers across our organizat
 Each skill includes the observed benefit in real development workflows.
 
 ### How to Install a Skill
-Inside your project repository, run either `npx skills` or the zero-dependency `curl` command:
+Requires **Node.js 18+ and npx** ([nodejs.org](https://nodejs.org/)).
 
-#### Option 1: Using `npx skills` (Vercel Skills Package Manager)
+Inside your project repository, run:
 ```bash
 # Interactive picker for this repository:
 npx skills add kolithadesilva/agentforge
 
 # Direct install for GitHub Copilot (.github/skills/<skill-name>/):
 npx skills add kolithadesilva/agentforge --skill <skill-name> -a github-copilot
-```
 
-#### Option 2: Zero-Dependency Scripts (No Node Required)
-**macOS / Linux (Bash):**
-```bash
-# Default: Installs for GitHub Copilot (.github/skills/<skill-name>/)
-curl -fsSL https://raw.githubusercontent.com/kolithadesilva/agentforge/main/install.sh | bash -s <skill-name>
-
-# Specify target agent: copilot | antigravity | cursor | claude
-curl -fsSL https://raw.githubusercontent.com/kolithadesilva/agentforge/main/install.sh | bash -s <skill-name> <agent>
-```
-
-**Windows (PowerShell):**
-```powershell
-# Default: Installs for GitHub Copilot (.github/skills/<skill-name>/)
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/kolithadesilva/agentforge/main/install.ps1))) <skill-name>
-
-# Specify target agent: copilot | antigravity | cursor | claude
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/kolithadesilva/agentforge/main/install.ps1))) <skill-name> <agent>
+# Direct install for other coding agents:
+npx skills add kolithadesilva/agentforge --skill <skill-name> -a [antigravity|cursor|claude-code]
 ```
 
 ---

@@ -82,29 +82,32 @@ To prevent stale pull requests from accumulating:
 
 ---
 
-## How to Install a Skill in Your Project
+## Prerequisites
 
-Engineers can install skills into their project using either `npx skills` (standard package manager) or a zero-dependency `curl` one-liner.
+Before you install skills, verify that your workstation has:
+- **Node.js and npx**: Version 18 or newer. If needed, install from [nodejs.org](https://nodejs.org/).
+- **AI Coding Agent**: GitHub Copilot, Google Antigravity, Cursor, or Claude Code.
 
 ---
 
-### Option 1: Using `npx skills` (Recommended)
+## How to Install a Skill in Your Project
 
-`agentforge` is 100% compatible with the open [`vercel-labs/skills`](https://github.com/vercel-labs/skills) standard.
+This repository uses [`vercel-labs/skills`](https://github.com/vercel-labs/skills), an open package manager for AI agent skills.
 
-#### 1. Interactive Picker
-Browse and select skills interactively in your terminal:
+### 1. Interactive Picker (Recommended)
+Open a terminal in your project directory and run:
 ```bash
 npx skills add kolithadesilva/agentforge
 ```
+This command shows all available skills and prompts you to choose your coding agent.
 
-#### 2. Install a Specific Skill for GitHub Copilot
-Install directly into `.github/skills/`:
+### 2. Direct Install for GitHub Copilot
+Install a specific skill directly into `.github/skills/`:
 ```bash
 npx skills add kolithadesilva/agentforge --skill pull-request-security-check -a github-copilot
 ```
 
-#### 3. Install for Other Coding Agents
+### 3. Install for Other Coding Agents
 ```bash
 # For Google Antigravity
 npx skills add kolithadesilva/agentforge --skill pull-request-security-check -a antigravity
@@ -116,35 +119,22 @@ npx skills add kolithadesilva/agentforge --skill pull-request-security-check -a 
 npx skills add kolithadesilva/agentforge --skill pull-request-security-check -a claude-code
 ```
 
-#### 4. Global Installation
-Install a skill globally so all your local projects have it:
+### 4. Global Installation
+Install a skill globally so all your local projects have access:
 ```bash
 npx skills add kolithadesilva/agentforge --skill pull-request-security-check -g
 ```
 
----
-
-### Option 2: Zero-Dependency Scripts (No Node Required)
-
-If you do not have Node.js or `npx` installed, use the native shell installer for your operating system.
-
-#### macOS & Linux (Bash / Zsh)
+### 5. Managing Skills
 ```bash
-# Default: Installs for GitHub Copilot (.github/skills/<skill-name>/)
-curl -fsSL https://raw.githubusercontent.com/kolithadesilva/agentforge/main/install.sh | bash -s <skill-name>
+# List all skills installed in your project
+npx skills list
 
-# Specify other agents: copilot | antigravity | cursor | claude
-curl -fsSL https://raw.githubusercontent.com/kolithadesilva/agentforge/main/install.sh | bash -s <skill-name> cursor
-```
+# Update installed skills to the latest version
+npx skills update
 
-#### Windows (PowerShell)
-Open PowerShell in your project directory:
-```powershell
-# Default: Installs for GitHub Copilot (.github/skills/<skill-name>/)
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/kolithadesilva/agentforge/main/install.ps1))) <skill-name>
-
-# Specify other agents: copilot | antigravity | cursor | claude
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/kolithadesilva/agentforge/main/install.ps1))) <skill-name> cursor
+# Remove a skill from your project
+npx skills remove <skill-name>
 ```
 
 ---
