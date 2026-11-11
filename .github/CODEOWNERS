@@ -1,0 +1,16 @@
+# AgentForge Code Owners
+# TL;DR: Defines who must review and approve skill submissions.
+
+# Default: Repository moderators must approve all changes
+*                            @kolithadesilva
+
+# Staging area for new skill submissions
+submissions/*                @kolithadesilva
+
+# Curated skill library categories
+skills/plan-and-spec/*       @kolithadesilva
+skills/architecture/*        @kolithadesilva
+skills/coding-and-refactor/* @kolithadesilva
+skills/testing-and-qa/*      @kolithadesilva
+skills/review-and-security/* @kolithadesilva
+skills/deploy-and-ops/*      @kolithadesilva
