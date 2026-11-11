@@ -28,15 +28,35 @@ jobs:
         id: run_validation
         run: |
           set +e
-          OUTPUT=$(python3 scripts/validate.py 2>&1)
+          python3 scripts/validate.py > validation_output.txt 2>&1
           EXIT_CODE=$?
-          echo "$OUTPUT"
+          cat validation_output.txt
 
-          # Export multiline output for next steps
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "validation_output<<$EOF" >> $GITHUB_OUTPUT
-          echo "$OUTPUT" >> $GITHUB_OUTPUT
-          echo "$EOF" >> $GITHUB_OUTPUT
+          if [ $EXIT_CODE -ne 0 ]; then
+            # Render report in GitHub Actions Step Summary tab
+            echo "### [VALIDATION FAILED] AgentForge Quality Check" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo '```text' >> $GITHUB_STEP_SUMMARY
+            cat validation_output.txt >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "> **Notice**: Pull requests with unresolved validation errors will be automatically closed after 5 days of inactivity." >> $GITHUB_STEP_SUMMARY
+
+            # Generate PR comment body file
+            {
+              echo "### [VALIDATION FAILED] AgentForge Quality Check"
+              echo ""
+              echo "This submission does not conform to repository standards:"
+              echo ""
+              echo '```text'
+              cat validation_output.txt
+              echo '```'
+              echo ""
+              echo "---"
+              echo "> **Notice**: Please push a commit with the required corrections. Pull requests with unresolved validation errors will be **automatically closed after 5 days** of inactivity."
+            } > pr_comment.md
+          fi
+
           exit $EXIT_CODE
 
       - name: On Failure - Label PR and Post Guidance
@@ -44,20 +64,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          VAL_OUTPUT: ${{ steps.run_validation.outputs.validation_output }}
         run: |
           gh pr edit "$PR_NUMBER" --add-label "status: invalid-submission" || true
-          COMMENT="### [VALIDATION FAILED] AgentForge Quality Check
-
-This submission does not conform to repository standards:
-
-\`\`\`text
-${VAL_OUTPUT}
-\`\`\`
-
----
-> **Notice**: Please push a commit with the required corrections. Pull requests with unresolved validation errors will be **automatically closed after 5 days** of inactivity."
-          gh pr comment "$PR_NUMBER" --body "$COMMENT" || true
+          if [ -f pr_comment.md ]; then
+            gh pr comment "$PR_NUMBER" --body-file pr_comment.md || true
+          fi
 
       - name: On Success - Remove Invalid Labels
         if: success() && github.event_name == 'pull_request'
